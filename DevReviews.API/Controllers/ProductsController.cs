@@ -1,3 +1,4 @@
+using System.Linq;
 using DevReviews.API.Entities;
 using DevReviews.API.Models;
 using DevReviews.API.Persistence;
@@ -21,14 +22,23 @@ namespace DevReviews.API.Controllers
         {
             var products = _dbContext.Products;
 
-            return Ok(products);
+            var productsViewModel = products
+                .Select(p => new ProductViewModel(p.Id, p.Title, p.Price));
+
+            return Ok(productsViewModel);
         }
 
         // GET para api/products/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok();
+            var product = _dbContext.Products.SingleOrDefault(p => p.Id == id);
+            
+            if(product == null){
+                return NotFound();
+            }
+
+            return Ok(product);
         }
 
         // POST para api/products
@@ -49,6 +59,17 @@ namespace DevReviews.API.Controllers
         {
             // Se tiver erros de validação, retornar BadRequest()
             // Se não existir produto com o id especificado, retornar NotFound()
+            if(model.Description.Length > 50){
+                return BadRequest();
+            }
+
+            var product = _dbContext.Products.SingleOrDefault(p => p.Id == id);
+
+            if(product == null){
+                return NotFound();
+            }
+
+            product.Update(model.Description, model.Price);
 
             return NoContent();
         }
