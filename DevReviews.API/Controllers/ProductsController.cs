@@ -33,12 +33,27 @@ namespace DevReviews.API.Controllers
         public IActionResult GetById(int id)
         {
             var product = _dbContext.Products.SingleOrDefault(p => p.Id == id);
-            
-            if(product == null){
+
+            if (product == null)
+            {
                 return NotFound();
             }
 
-            return Ok(product);
+            var reviewsViewModel = product
+                .Reviews
+                .Select(r => new ProductReviewViewModel(r.Id, r.Author, r.Rating, r.Comments, r.RegisteredAt))
+                .ToList();
+
+            var productDetails = new ProductDetailsViewModel(
+                product.Id,
+                product.Title,
+                product.Description,
+                product.Price,
+                product.RegisteredAt,
+                reviewsViewModel
+            );
+
+            return Ok(productDetails);
         }
 
         // POST para api/products
@@ -59,13 +74,15 @@ namespace DevReviews.API.Controllers
         {
             // Se tiver erros de validação, retornar BadRequest()
             // Se não existir produto com o id especificado, retornar NotFound()
-            if(model.Description.Length > 50){
+            if (model.Description.Length > 50)
+            {
                 return BadRequest();
             }
 
             var product = _dbContext.Products.SingleOrDefault(p => p.Id == id);
 
-            if(product == null){
+            if (product == null)
+            {
                 return NotFound();
             }
 
