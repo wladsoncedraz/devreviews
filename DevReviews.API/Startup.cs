@@ -1,4 +1,5 @@
 using DevReviews.API.Persistence;
+using DevReviews.API.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ namespace DevReviews.API
         {
             // Transient, Scoped, Singleton
             services.AddSingleton<DevReviewsDbContext>();
+
+            services.AddAutoMapper(typeof(ProductProfile));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
