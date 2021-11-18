@@ -21,6 +21,8 @@ namespace DevReviews.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetValue<string>("DevReviewsCn");
+
             // Transient, Scoped, Singleton
             services.AddSingleton<DevReviewsDbContext>();
 

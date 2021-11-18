@@ -13,7 +13,7 @@ Foi desenvolvida uma API REST completa de gerenciamento de produtos e suas avali
 - Padrão Repository
 - Logs com Serilog
 - Publicação na nuvem com Azure App Service
--T
+
 ## Funcionalidades
 - Cadastro, Listagem, Detalhes, Atualização e Remoção de Produto.
 - Cadastro e Detalhes de uma avaliação
