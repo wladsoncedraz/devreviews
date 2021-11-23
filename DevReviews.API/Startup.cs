@@ -2,6 +2,7 @@ using DevReviews.API.Persistence;
 using DevReviews.API.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,8 +24,10 @@ namespace DevReviews.API
         {
             var connectionString = Configuration.GetValue<string>("DevReviewsCn");
 
+            services.AddDbContext<DevReviewsDbContext>(o => o.UseSqlServer(connectionString));
+
             // Transient, Scoped, Singleton
-            services.AddSingleton<DevReviewsDbContext>();
+            // services.AddSingleton<DevReviewsDbContext>();
 
             services.AddAutoMapper(typeof(ProductProfile));
 

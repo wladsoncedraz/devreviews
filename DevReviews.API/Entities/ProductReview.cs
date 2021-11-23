@@ -10,7 +10,7 @@ namespace DevReviews.API.Entities
             Rating = rating;
             Comments = comments;
             ProductId = productId;
-            
+
             RegisteredAt = DateTime.Now;
         }
 

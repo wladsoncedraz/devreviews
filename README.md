@@ -17,3 +17,8 @@ Foi desenvolvida uma API REST completa de gerenciamento de produtos e suas avali
 ## Funcionalidades
 - Cadastro, Listagem, Detalhes, Atualização e Remoção de Produto.
 - Cadastro e Detalhes de uma avaliação
+
+## Comandos auxiliares pra migrations
+- dotnet-ef migrations add NameMigration
+- dotnet-ef database update
+- dotnet-ef migration script -o FirstMigration
